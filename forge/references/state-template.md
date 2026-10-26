@@ -37,6 +37,10 @@ trigger that makes it worth revisiting.>
 ## Decisions
 <Links to decision memos for one-way doors.>
 
+## Rulings
+<Calls made without asking, one per line: what, why, cost if wrong.>
+
+
 ## Review dates
 - intent/SOUL.md: <date>   GRAVITY.md: <date>   INTENT.md: <date>
 - security re-run due on: any change to auth, tenancy, payments, dependencies

@@ -152,3 +152,23 @@ Fix blockers through the `code-quality` loop (failing test first for bugs), then
 re-run steps 2 and 5 on the new diff. If a failure cannot be explained in a sentence,
 stop patching and use `investigate`. When the verdict is PASS or PASS WITH NOTES,
 paste it into the PR body's "How verified" section so `ship` can quote it.
+
+Cap the fix loop at five rounds. From round four, give the fix to a stronger model,
+and scope each re-check to the fix diff instead of re-reviewing everything. At the
+cap, stop and report what is still failing; do not keep looping, and do not quietly
+accept the risk.
+
+## 8. When you are on the receiving end of review feedback
+
+This applies to feedback from a person, a reviewer agent, or this skill's own output:
+
+1. **Clarify every unclear item before changing anything.** Partial understanding
+   produces confident wrong fixes.
+2. **Check each suggestion against the codebase** before accepting it. It may be
+   wrong for this code, already handled, or based on a version you do not use.
+3. **Push back with evidence** when a suggestion is wrong, instead of complying to be
+   agreeable. Agreement without verification is how bad changes land.
+4. **Before building the "proper" version of something a reviewer asks for, grep for
+   whether it is used at all.** If nothing calls it, say so and propose removing it.
+5. **Fix in order:** blocking issues, then simple ones, then complex ones, testing
+   after each.

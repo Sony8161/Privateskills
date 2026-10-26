@@ -45,6 +45,11 @@ a filled-in copy to start from.
 | `pacing_instruction` | When to stop gathering and start writing, e.g. "At call N-2, stop researching." |
 | `output_path` | The one file the worker must write. The folder is the deliverable. |
 
+**Optional fields.** `model` (`haiku`, `sonnet`, `opus`, `fable` or `inherit`) and
+`effort` (`low`, `medium`, `high`, `xhigh`, `max`) record how the worker should be
+run. The validator checks them when present, and `--dispatch` prints them so you
+copy the same values onto the Agent call. Choose them with `forge/references/model-routing.md`.
+
 ## Workflow
 
 1. **Write the brief(s)** as JSON, one per worker, into `briefs/` in the project.

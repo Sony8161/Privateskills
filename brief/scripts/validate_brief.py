@@ -25,6 +25,10 @@ REQUIRED = [
 ]
 
 
+MODELS = {"haiku", "sonnet", "opus", "fable", "inherit"}
+EFFORTS = {"low", "medium", "high", "xhigh", "max"}
+
+
 def is_empty(value):
     if value is None:
         return True
@@ -55,6 +59,10 @@ def validate(brief):
         )
     if isinstance(brief.get("criteria"), str):
         problems.append("criteria should be a list of checkable statements")
+    if "model" in brief and brief["model"] not in MODELS:
+        problems.append(f"model must be one of {sorted(MODELS)}, got {brief['model']!r}")
+    if "effort" in brief and brief["effort"] not in EFFORTS:
+        problems.append(f"effort must be one of {sorted(EFFORTS)}, got {brief['effort']!r}")
     return problems
 
 
@@ -97,6 +105,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("files", nargs="+")
     parser.add_argument("--render", action="store_true", help="print the compiled prompt")
+    parser.add_argument("--dispatch", action="store_true",
+                        help="print the model and effort to pass on each Agent call")
     args = parser.parse_args()
 
     failed = False
@@ -119,6 +129,9 @@ def main():
                 print(f"  - {p}")
         elif args.render:
             print(render(brief))
+        elif args.dispatch:
+            print(f"{brief['id']}: model={brief.get('model', 'inherit')} "
+                  f"effort={brief.get('effort', 'session default')}")
         else:
             print(f"ok   {path}")
 

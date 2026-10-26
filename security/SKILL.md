@@ -1,6 +1,7 @@
 ---
 name: security
 description: Find and prove vulnerabilities in code you own - threat model, static review against the OWASP Top 10, automated scanning for known CVEs in dependencies, code, secrets, containers and infrastructure (npm audit, pip-audit, osv-scanner, semgrep, gitleaks, trivy and more, plus a CI workflow), and an authorized penetration test of your own running app (auth bypass, IDOR, injection, XSS, CSRF, SSRF, headers, rate limits), with every finding reproduced before it is reported, independent second opinions from specialist reviewers, a compliance-readiness check for a small SaaS (GDPR, US privacy laws, SOC 2 and ISO 27001 readiness, questionnaires, AI governance), then a security report and a public disclosure policy. Use this whenever the user asks about security, vulnerabilities, a pen test, hardening, "is this safe", "can someone hack this", an auth or payment or multi-tenant feature, secrets in a repo, a dependency CVE, or before launching anything that takes user data. Trigger it before shipping any app that handles logins, personal data, or money, even if the user only said "review this". Only for systems the user owns or is explicitly authorized to test.
+effort: high
 allowed-tools:
   - Read
   - Write
