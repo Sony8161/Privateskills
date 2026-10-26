@@ -94,6 +94,10 @@ is decoration.
 
 ## 5. Read it as a stranger
 
+The `code-check` skill packages this step as a verdict (mechanical scan, gates,
+five-lens read, independent reviewers, verified findings); run it for anything
+non-trivial. What follows is the quick version.
+
 Before handing off, read your own diff as a reviewer who did not write it. Then,
 for non-trivial changes, delegate a fresh-eyes review to the matching reviewer
 that is installed: `ecc:python-reviewer`, `ecc:typescript-reviewer`,

@@ -19,9 +19,9 @@ detail instead of copying it.
 | 1 Discover | no Fatal, claims confirmed, first contact named | | | runs/<name>/synthesis.md |
 | 2 Define | spec + requests + data categories | | | 01-<slug>.md |
 | 3 Design | threat model, tenancy and auth named | | | security/REPORT.md (draft) |
-| 4 Build | per slice: green + receipt | | | bay board |
+| 4 Build | per slice: green, code-check not BLOCK, receipt | | | bay board |
 | 5 Harden | no open Critical/High, unverified listed | | | security/REPORT.md |
-| 6 Ship | ship gate green, rollback real | | | PR link |
+| 6 Ship | code-check not BLOCK, ship gate green, rollback real | | | PR link |
 | 7 Learn | lesson kept, kill criteria checked | | | RETRO.md |
 
 ## Open risks

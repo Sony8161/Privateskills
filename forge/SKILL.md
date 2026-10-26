@@ -1,6 +1,6 @@
 ---
 name: forge
-description: The end-to-end workflow for building a software product or startup from idea to shipped and secured - which skill to run at each stage, what must be true before moving on, and where the project's state is recorded. Chains the idea-validation, spec, design, build, security, hardening, ship and retro skills (spec, decide, pressure-test, swarm, verify, intent, bay, code-quality, security, agent-evals, grc, investigate, ship, retro, meeting-prep) into one gated pipeline. Use this whenever the user wants to build something end to end, start a new project or startup, asks "where do I start", "what's next", "what's the workflow", "plan the whole build", "how do I go from idea to launch", or returns to a project mid-way and needs to know where things stand. Run with no arguments to report current stage and next action.
+description: The end-to-end workflow for building a software product or startup from idea to shipped and secured - which skill to run at each stage, what must be true before moving on, and where the project's state is recorded. Chains the idea-validation, spec, design, build, security, hardening, ship and retro skills (spec, decide, pressure-test, swarm, verify, intent, bay, code-quality, code-check, security, agent-evals, grc, investigate, ship, retro, meeting-prep) into one gated pipeline. Use this whenever the user wants to build something end to end, start a new project or startup, asks "where do I start", "what's next", "what's the workflow", "plan the whole build", "how do I go from idea to launch", or returns to a project mid-way and needs to know where things stand. Run with no arguments to report current stage and next action.
 allowed-tools:
   - Read
   - Write
@@ -103,10 +103,15 @@ For each request, in order:
 3. A failure you cannot explain in a sentence: `investigate`. No patching by guess.
 4. Slice touches auth, payments, user data, uploads or external input: run
    `security` on that slice now.
-5. `verify` section C: the new test fails without the change.
-6. `bay move <id> delivered --receipt "<exactly what was run and seen>"`.
+5. `code-check` on the slice's diff: mechanical scan, the project's own gates, a
+   five-lens read, independent reviewers, every finding verified. **BLOCK sends you
+   back to step 2**; PASS or PASS WITH NOTES continues.
+6. `verify` section C: the new test fails without the change.
+7. `bay move <id> delivered --receipt "<exactly what was run and seen, and the
+   code-check verdict>"`.
 
-**Gate (per slice):** commands actually run and green, receipt written. Update
+**Gate (per slice):** commands actually run and green, `code-check` not BLOCK,
+receipt written. Update
 `forge/STATE.md` after each slice so the next session starts from the file, not from
 memory.
 
@@ -121,11 +126,13 @@ listed, not hidden; for AI features, an eval report with the baseline and
 known-bad control passing.
 
 ### 6. Ship
-**Run:** `ship` (diff read, tests, build, exercise the change, PR with rollback).
-Deployment details from `ecc:deployment-patterns` and `ecc:docker-patterns`. Make
-sure the public `SECURITY.md` disclosure policy exists.
-**Gate:** `ship` reports green, honestly. The rollback line is real. Secrets are in
-the environment, not the repo.
+**Run:** `code-check --base main` over the whole branch (with `security`'s
+`audit.py` so dependency CVEs are included), then `ship` (diff read, tests, build,
+exercise the change, PR with rollback). Quote the code-check verdict in the PR's
+"How verified" section. Deployment details from `ecc:deployment-patterns` and
+`ecc:docker-patterns`. Make sure the public `SECURITY.md` disclosure policy exists.
+**Gate:** `code-check` is not BLOCK, and `ship` reports green, honestly. The
+rollback line is real. Secrets are in the environment, not the repo.
 
 ### 7. Learn
 **Run:** `retro` with evidence from git and the `bay` log; one lesson to memory.
@@ -163,6 +170,7 @@ checked against their date. Then loop to stage 1 or 4.
 | Prep a high-stakes conversation | `meeting-prep` | yours |
 | Handoffs with stable IDs and receipts | `bay` | new |
 | Write quality code, tests first | `code-quality` | new |
+| Verdict on whether a change is clean and secure | `code-check` | new |
 | Find the root cause of a bug | `investigate` | yours |
 | Vulnerabilities and authorized pen test | `security` | new |
 | Test an AI agent or prompt | `agent-evals` | new |
