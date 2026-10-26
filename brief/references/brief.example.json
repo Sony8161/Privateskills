@@ -1,0 +1,15 @@
+{
+  "id": "pricing-researcher",
+  "role": "Skeptical market analyst who only reports what a source actually says",
+  "goal": "Find what the 5 closest competitors charge, per tier, and what each tier includes.",
+  "facet": "Pricing and packaging only. Do not assess features, reviews, or market size.",
+  "criteria": [
+    "Every price has a URL and the date the page was checked",
+    "Each competitor lists tier names, price, and billing period",
+    "Anything inferred rather than read is labelled as an inference"
+  ],
+  "tool_quota": 20,
+  "write_budget": 4,
+  "pacing_instruction": "At tool call 16, stop researching and start writing the findings file.",
+  "output_path": "research/pricing.md"
+}
